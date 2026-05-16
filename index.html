@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zodíaco Diário | Seu Horóscopo em Detalhes</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <i class="fa-solid fa-moon astrologo-icon"></i>
+            <h1>Zodíaco Diário</h1>
+            <p id="current-date"></p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="sign-selector-section">
+            <h2>Escolha seu Signo</h2>
+            <div class="sign-grid" id="sign-grid">
+                </div>
+        </section>
+
+        <section class="horoscope-display-section" id="horoscope-display" style="display: none;">
+            <div class="horoscope-card">
+                <div class="card-header">
+                    <i class="" id="card-icon"></i>
+                    <div class="sign-info">
+                        <h2 id="card-sign-name">Áries</h2>
+                        <p id="card-sign-dates">21 Mar - 19 Abr</p>
+                    </div>
+                </div>
+                
+                <div class="card-body">
+                    <h3>Sua Previsão de Hoje</h3>
+                    <p id="card-horoscope-text" class="horoscope-text"></p>
+                    
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <i class="fa-solid fa-heart color-amor"></i>
+                            <strong>Amor:</strong> <span id="card-amor"></span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fa-solid fa-briefcase color-trabalho"></i>
+                            <strong>Trabalho:</strong> <span id="card-trabalho"></span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fa-solid fa-gem color-sorte"></i>
+                            <strong>Pedra:</strong> <span id="card-pedra"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Zodíaco Diário. Astrologia e Bem-estar.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
