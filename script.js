@@ -19,11 +19,15 @@ const zodaicData = {
 document.addEventListener('DOMContentLoaded', () => {
     setTodayDate();
     populateSignGrid();
+    setupCloseButton();
+    setupOutsideClick();
 });
 
 // --- 3. FUNÇÕES ---
 
-// Define a data atual no header
+/**
+ * Define a data atual no header
+ */
 function setTodayDate() {
     const dateElement = document.getElementById('current-date');
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -32,9 +36,14 @@ function setTodayDate() {
     dateElement.textContent = today.toLocaleDateString('pt-BR', options);
 }
 
-// Cria os itens do grid dinamicamente
+/**
+ * Cria os itens do grid dinamicamente
+ */
 function populateSignGrid() {
     const grid = document.getElementById('sign-grid');
+    
+    // Limpa o grid antes de popular
+    grid.innerHTML = '';
     
     for (const key in zodaicData) {
         const sign = zodaicData[key];
@@ -42,27 +51,38 @@ function populateSignGrid() {
         const signItem = document.createElement('div');
         signItem.className = 'sign-item';
         signItem.dataset.sign = key;
+        signItem.title = `Ver previsão de ${sign.name}`;
+        signItem.setAttribute('tabindex', '0');
+        signItem.setAttribute('role', 'button');
+        signItem.setAttribute('aria-pressed', 'false');
         
         signItem.innerHTML = `
-            <i class="fa-solid ${sign.icon} bg-icon"></i> 
-            
-            <i class="fa-solid ${sign.icon}"></i>
+            <i class="fas ${sign.icon}"></i>
             <span>${sign.name}</span>
             <small>${sign.dates}</small>
         `;
         
         signItem.addEventListener('click', () => showHoroscope(key));
+        signItem.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                showHoroscope(key);
+            }
+        });
+        
         grid.appendChild(signItem);
     }
 }
 
-// Mostra o horóscopo detalhado no card
+/**
+ * Mostra o horóscopo detalhado no card
+ */
 function showHoroscope(signKey) {
     const sign = zodaicData[signKey];
     const displaySection = document.getElementById('horoscope-display');
     
     // Atualiza os elementos do card
-    document.getElementById('card-icon').className = `fa-solid ${sign.icon}`;
+    document.getElementById('card-icon').className = `fas ${sign.icon}`;
     document.getElementById('card-sign-name').textContent = sign.name;
     document.getElementById('card-sign-dates').textContent = sign.dates;
     document.getElementById('card-horoscope-text').textContent = sign.text;
@@ -72,6 +92,7 @@ function showHoroscope(signKey) {
     
     // Mostra a seção e adiciona a animação de fade-in
     displaySection.style.display = 'block';
+    
     // Pequeno delay para a animação do CSS funcionar
     setTimeout(() => {
         displaySection.classList.add('show');
@@ -79,16 +100,84 @@ function showHoroscope(signKey) {
     
     // Marca o item no grid como 'ativo'
     updateActiveSign(signKey);
+    
+    // Scroll suave até o card
+    setTimeout(() => {
+        displaySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
 }
 
-// Atualiza a classe 'active' no grid de signos
+/**
+ * Atualiza a classe 'active' no grid de signos
+ */
 function updateActiveSign(activeKey) {
     const items = document.querySelectorAll('.sign-item');
     items.forEach(item => {
         if (item.dataset.sign === activeKey) {
             item.classList.add('active');
+            item.setAttribute('aria-pressed', 'true');
         } else {
             item.classList.remove('active');
+            item.setAttribute('aria-pressed', 'false');
+        }
+    });
+}
+
+/**
+ * Configura o botão de fechar
+ */
+function setupCloseButton() {
+    const closeButton = document.getElementById('close-button');
+    if (closeButton) {
+        closeButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            hideHoroscope();
+        });
+        
+        // Fechar com tecla ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const displaySection = document.getElementById('horoscope-display');
+                if (displaySection.style.display === 'block') {
+                    hideHoroscope();
+                }
+            }
+        });
+    }
+}
+
+/**
+ * Esconde a seção de horóscopo
+ */
+function hideHoroscope() {
+    const displaySection = document.getElementById('horoscope-display');
+    displaySection.classList.remove('show');
+    
+    setTimeout(() => {
+        displaySection.style.display = 'none';
+        // Remove a classe active de todos os items
+        const items = document.querySelectorAll('.sign-item');
+        items.forEach(item => {
+            item.classList.remove('active');
+            item.setAttribute('aria-pressed', 'false');
+        });
+    }, 300);
+}
+
+/**
+ * Fecha o horóscopo ao clicar fora do card
+ */
+function setupOutsideClick() {
+    document.addEventListener('click', (e) => {
+        const displaySection = document.getElementById('horoscope-display');
+        const horoscopeCard = document.querySelector('.horoscope-card');
+        const signGrid = document.getElementById('sign-grid');
+        
+        if (displaySection && displaySection.style.display === 'block') {
+            // Verifica se clicou fora do card e da grid
+            if (horoscopeCard && !horoscopeCard.contains(e.target) && !signGrid.contains(e.target)) {
+                hideHoroscope();
+            }
         }
     });
 }
