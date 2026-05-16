@@ -1,58 +1,87 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zodíaco Diário | Seu Horóscopo em Detalhes</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS Local -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
+    <!-- HEADER -->
     <header>
         <div class="header-content">
-            <i class="fa-solid fa-moon astrologo-icon"></i>
+            <i class="fas fa-moon astrologo-icon"></i>
             <h1>Zodíaco Diário</h1>
             <p id="current-date"></p>
+            <p class="header-subtitle">Suas previsões astrológicas em tempo real</p>
         </div>
     </header>
 
     <main class="container">
+        <!-- SEÇÃO DE SELEÇÃO DE SIGNOS -->
         <section class="sign-selector-section">
-            <h2>Escolha seu Signo</h2>
-            <div class="sign-grid" id="sign-grid">
-                </div>
+            <h2>✨ Escolha seu Signo</h2>
+            <p class="section-subtitle">Clique para ver sua previsão completa de hoje</p>
+            <div class="sign-grid" id="sign-grid"></div>
         </section>
 
-        <section class="horoscope-display-section" id="horoscope-display" style="display: none;">
+        <!-- SEÇÃO DE HORÓSCOPO DETALHADO -->
+        <section class="horoscope-display-section" id="horoscope-display">
             <div class="horoscope-card">
+                <!-- Cabeçalho do Card -->
+                <button id="close-button" class="close-button" title="Fechar previsão">
+                    <i class="fas fa-times"></i>
+                </button>
+
                 <div class="card-header">
-                    <i class="" id="card-icon"></i>
+                    <div class="icon-container">
+                        <i class="fas fa-star" id="card-icon"></i>
+                    </div>
                     <div class="sign-info">
-                        <h2 id="card-sign-name">Áries</h2>
-                        <p id="card-sign-dates">21 Mar - 19 Abr</p>
+                        <h2 id="card-sign-name">Signo</h2>
+                        <p id="card-sign-dates">Datas</p>
                     </div>
                 </div>
                 
+                <!-- Corpo do Card -->
                 <div class="card-body">
-                    <h3>Sua Previsão de Hoje</h3>
+                    <h3>✨ Sua Previsão de Hoje</h3>
                     <p id="card-horoscope-text" class="horoscope-text"></p>
                     
+                    <!-- Grid de Detalhes -->
                     <div class="details-grid">
-                        <div class="detail-item">
-                            <i class="fa-solid fa-heart color-amor"></i>
-                            <strong>Amor:</strong> <span id="card-amor"></span>
+                        <div class="detail-item amor-item">
+                            <div class="detail-header">
+                                <i class="fas fa-heart"></i>
+                                <strong>Amor</strong>
+                            </div>
+                            <span id="card-amor" class="detail-text"></span>
                         </div>
-                        <div class="detail-item">
-                            <i class="fa-solid fa-briefcase color-trabalho"></i>
-                            <strong>Trabalho:</strong> <span id="card-trabalho"></span>
+                        
+                        <div class="detail-item trabalho-item">
+                            <div class="detail-header">
+                                <i class="fas fa-briefcase"></i>
+                                <strong>Trabalho</strong>
+                            </div>
+                            <span id="card-trabalho" class="detail-text"></span>
                         </div>
-                        <div class="detail-item">
-                            <i class="fa-solid fa-gem color-sorte"></i>
-                            <strong>Pedra:</strong> <span id="card-pedra"></span>
+                        
+                        <div class="detail-item pedra-item">
+                            <div class="detail-header">
+                                <i class="fas fa-gem"></i>
+                                <strong>Pedra do Signo</strong>
+                            </div>
+                            <span id="card-pedra" class="detail-text"></span>
                         </div>
                     </div>
                 </div>
@@ -60,10 +89,12 @@
         </section>
     </main>
 
+    <!-- FOOTER -->
     <footer>
-        <p>&copy; 2026 Zodíaco Diário. Astrologia e Bem-estar.</p>
+        <p>✨ © 2026 Zodíaco Diário. Astrologia e Bem-estar. ✨</p>
     </footer>
 
+    <!-- JavaScript Local -->
     <script src="script.js"></script>
 </body>
 </html>
